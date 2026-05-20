@@ -121,7 +121,7 @@ fn main() {
     println!("=== SoilModel (VanGenuchten, N=5) ===");
     model.print_nested();
 
-    let (x0, lb, ub, paths) = model.opt_bounds_nested();
+    let (x0, _lb, _ub, paths) = model.opt_bounds_nested();
     println!("\n{} optimisable parameters", x0.len());
     println!("first path: {:?}", paths[0]);
 

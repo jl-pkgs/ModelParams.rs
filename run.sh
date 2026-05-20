@@ -1,5 +1,7 @@
 #! /bin/env bash
-args = "--release -p modelparams-examples"
+set -euo pipefail
+
+args="--release -p modelparams-examples"
 
 cargo run $args --example beps_model
 cargo run $args --example pml_model

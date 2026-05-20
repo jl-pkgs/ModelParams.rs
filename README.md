@@ -1,5 +1,8 @@
 # ModelParams Rust Workspace
 
+[![CI](https://github.com/jl-pkgs/ModelParams.rs/actions/workflows/CI.yml/badge.svg)](https://github.com/jl-pkgs/ModelParams.rs/actions/workflows/CI.yml)
+[![Codecov](https://codecov.io/gh/jl-pkgs/ModelParams.rs/branch/master/graph/badge.svg)](https://app.codecov.io/gh/jl-pkgs/ModelParams.rs/tree/master)
+
 This directory contains the Rust workspace for `modelparams`.
 
 ## Crates
