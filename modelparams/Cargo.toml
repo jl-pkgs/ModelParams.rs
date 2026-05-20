@@ -10,3 +10,6 @@ rand = { version = "0.8", features = ["small_rng"] }
 
 [dev-dependencies]
 approx = "0.5"
+
+[lints]
+workspace = true

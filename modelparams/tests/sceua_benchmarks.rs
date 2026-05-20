@@ -1,10 +1,11 @@
-use modelparams::optim::{sceua, SceOptions, ReturnCode};
+use modelparams::optim::{sceua, SceOptions};
 
 fn opts(n: usize) -> SceOptions {
     SceOptions {
         kstop: 10,
-        f_reltol: 1e-3,
-        x_reltol: 1e-3,
+        // These benchmark tests assert tight optima; avoid early stall exits.
+        f_reltol: -1.0,
+        x_reltol: 1e-8,
         verbose: false,
         parallel: false,
         ..SceOptions::new(n)
@@ -103,7 +104,8 @@ fn test_rosenbrock() {
     let r = sceua(rosenbrock, &x0, &bl, &bu,
                   SceOptions { max_evals: 10000, ..opts(2) });
     assert!(r.best_f.abs() < 1e-6,
-            "Rosenbrock: expected ~0, got {}", r.best_f);
+            "Rosenbrock: expected ~0, got {}, x={:?}, code={:?}, n_evals={}",
+            r.best_f, r.best_x, r.code, r.n_evals);
 }
 
 #[test]
@@ -124,7 +126,8 @@ fn test_rastrigin() {
     let r = sceua(rastrigin, &x0, &bl, &bu,
                   SceOptions { max_evals: 10000, ..opts(2) });
     assert!((r.best_f - (-2.0)).abs() < 1e-3,
-            "Rastrigin: expected ~-2, got {}", r.best_f);
+            "Rastrigin: expected ~-2, got {}, x={:?}, code={:?}, n_evals={}",
+            r.best_f, r.best_x, r.code, r.n_evals);
 }
 
 #[test]

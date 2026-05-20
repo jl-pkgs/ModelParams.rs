@@ -4,3 +4,6 @@ members = [
     "modelparams-derive",
 ]
 resolver = "2"
+
+[workspace.lints.rust]
+unused_imports = "allow"

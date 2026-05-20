@@ -3,6 +3,39 @@ pub mod optim;
 
 pub use modelparams_derive::{ModelParams, Layers};
 
+use rayon::prelude::*;
+
+/// Map `f` over `items`, optionally in parallel.
+/// Thread-safe for read-only closures.
+pub fn par_map<A, B, F>(items: &[A], parallel: bool, f: F) -> Vec<B>
+where
+    F: Fn(&A) -> B + Sync + Send,
+    A: Sync,
+    B: Send,
+{
+    if parallel {
+        items.par_iter().map(f).collect()
+    } else {
+        items.iter().map(f).collect()
+    }
+}
+
+/// Map `f(item, state_clone)` over `items`, cloning `state` per item.
+/// The original `state` is never modified; safe for both serial and parallel.
+pub fn par_map_cloned<A, B, S, F>(items: &[A], state: &S, parallel: bool, f: F) -> Vec<B>
+where
+    F: Fn(&A, S) -> B + Sync + Send,
+    A: Sync,
+    S: Clone + Send + Sync,
+    B: Send,
+{
+    if parallel {
+        items.par_iter().map(|x| f(x, state.clone())).collect()
+    } else {
+        items.iter().map(|x| f(x, state.clone())).collect()
+    }
+}
+
 // ── scalar parameter metadata ─────────────────────────────────────────────────
 
 #[derive(Debug, Clone)]
