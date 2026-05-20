@@ -27,21 +27,27 @@ jobs:
 
       - name: Generate coverage from tests and examples
         run: |
-          cargo llvm-cov clean --workspace
           source <(cargo llvm-cov show-env --export-prefix)
+          cargo llvm-cov clean --workspace
           cargo test --workspace --all-targets
           for example in examples/*.rs; do
             name="$(basename "$example" .rs)"
             cargo run -p modelparams-examples --example "$name"
           done
-          cargo llvm-cov report --lcov --output-path lcov.info
+          cargo llvm-cov report --codecov --output-path codecov.json
+
+      - name: Debug coverage report
+        run: |
+          echo "Lines in codecov.json: $(wc -l < codecov.json)"
+          head -5 codecov.json
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          files: lcov.info
+          files: codecov.json
           fail_ci_if_error: true
+          verbose: true
 
       # - name: Run examples
       #   run: |
