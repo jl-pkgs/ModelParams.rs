@@ -1,7 +1,6 @@
 use modelparams::{ModelParams, NestedModelParams, PathParam};
 
 // ── water constraint model ────────────────────────────────────────────────────
-
 /// Zhang 2019 VPD-based water constraint.
 /// Global optimum corresponds to no water stress (β = 1).
 #[derive(ModelParams, Clone, Debug)]

@@ -4,7 +4,8 @@ This directory contains the Rust workspace for `modelparams`.
 
 ## Crates
 
-- `modelparams`: main library, examples, and integration tests.
+- `modelparams`: main library and integration tests.
+- `modelparams-examples`: top-level example package.
 - `modelparams-derive`: procedural macros used by `modelparams`.
 
 ## Build
@@ -24,20 +25,20 @@ cargo build --release
 
 ## Run Examples
 
-Examples live in `modelparams/examples`.
+Examples live in `examples`.
 
 Run one example with:
 
 ```powershell
-cargo run -p modelparams --example beps_model
+cargo run -p modelparams-examples --example beps_model
 ```
 
 Other available examples:
 
 ```powershell
-cargo run -p modelparams --example pml_model
-cargo run -p modelparams --example soil_model
-cargo run -p modelparams --example van_genuchten
+cargo run -p modelparams-examples --example pml_model
+cargo run -p modelparams-examples --example soil_model
+cargo run -p modelparams-examples --example van_genuchten
 ```
 
 ## Run Tests

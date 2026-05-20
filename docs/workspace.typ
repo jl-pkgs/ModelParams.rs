@@ -109,7 +109,7 @@ cargo build
 cargo build -p modelparams
 
 # 运行某个成员的示例
-cargo run -p modelparams --example soil_model
+cargo run -p modelparams-examples --example soil_model
 
 # 运行所有测试
 cargo test
@@ -118,7 +118,7 @@ cargo test
 cargo test -p modelparams
 
 # release 模式（优化，去调试符号）
-cargo build --release -p modelparams --example van_genuchten
+cargo build --release -p modelparams-examples --example van_genuchten
 
 # 检查代码（不编译，速度快）
 cargo check
