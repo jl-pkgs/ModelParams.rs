@@ -25,11 +25,16 @@ jobs:
       - name: Install cargo-llvm-cov
         uses: taiki-e/install-action@cargo-llvm-cov
 
-      - name: Run tests
-        run: cargo test --workspace
-
-      - name: Generate coverage
-        run: cargo llvm-cov --workspace --lcov --output-path lcov.info
+      - name: Generate coverage from tests and examples
+        run: |
+          cargo llvm-cov clean --workspace
+          source <(cargo llvm-cov show-env --export-prefix)
+          cargo test --workspace --all-targets
+          for example in examples/*.rs; do
+            name="$(basename "$example" .rs)"
+            cargo run -p modelparams-examples --example "$name"
+          done
+          cargo llvm-cov report --lcov --output-path lcov.info
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5
@@ -38,12 +43,10 @@ jobs:
           files: lcov.info
           fail_ci_if_error: true
 
-      - name: Build examples
-        run: cargo build --workspace --examples
-
-      - name: Run examples
-        run: |
-          cargo run -p modelparams-examples --example beps_model
-          cargo run -p modelparams-examples --example pml_model
-          cargo run -p modelparams-examples --example soil_model
-          cargo run -p modelparams-examples --example van_genuchten
+      # - name: Run examples
+      #   run: |
+      #     cargo build --workspace --examples
+      #     cargo run -p modelparams-examples --example beps_model
+      #     cargo run -p modelparams-examples --example pml_model
+      #     cargo run -p modelparams-examples --example soil_model
+      #     cargo run -p modelparams-examples --example van_genuchten
