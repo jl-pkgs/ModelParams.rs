@@ -1,0 +1,6 @@
+[workspace]
+members = [
+    "modelparams",
+    "modelparams-derive",
+]
+resolver = "2"

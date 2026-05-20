@@ -1,0 +1,12 @@
+[package]
+name = "modelparams"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+modelparams-derive = { path = "../modelparams-derive" }
+rayon = "1"
+rand = { version = "0.8", features = ["small_rng"] }
+
+[dev-dependencies]
+approx = "0.5"
